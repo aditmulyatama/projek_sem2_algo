@@ -116,7 +116,7 @@ void output(){
 }
 
 void cari(){
-    cout<<"haha";
+  
     system("cls");
     cout<<"mntap";
 }
