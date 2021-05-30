@@ -7,15 +7,15 @@
 using namespace std;
 
 struct dataLaptop{
-    char id_laptop[5];
+    char id_laptop[10];
     char nama_laptop[90];
     long harga;
     int garansi, stok;
 };
 
-FILE *arsipLaptop;
+FILE *arsipLaptop,*f1,*f2,*f3;
 
-void input(),output(),cari(),sorting(),transaksi();
+void input(),output(),cari(),sorting(),transaksi(),lihat(char a[]);
 
 int main()
 {   
@@ -128,6 +128,58 @@ void sorting(){
 
 void transaksi(){
     system("cls");
-    cout<<"mantap";
+    char file1[50],file2[50],file3[50];
+    dataLaptop laptop;
+    int pilih;
+    cout<<"1. Merging Sambung \n2.Splitting\nPilih : "; cin>>pilih;
+
+    switch (pilih)
+    {
+    case 1:
+        system("cls");
+        cout<<"Masukkan nama file 1 : ";cin>>file1;
+        lihat(file1);
+        cout<<"\nMasukkan nama file 2 : ";cin>>file2;
+        lihat(file2);
+        cout<<"\n\nMasukkan nama file sambung : ";cin>>file3;
+
+        if ((f1 = fopen(file1,"r"))==NULL || (f2 = fopen(file2,"r"))==NULL || (f3 = fopen(file3,"w"))==NULL)
+        { 
+            cout<<"File gagal!\n ";
+            exit(1);
+        }
+
+        while(fread(&laptop,sizeof(laptop),1,f1)){
+            fwrite(&laptop,sizeof(laptop),1,f3);
+        } while(fread(&laptop,sizeof(laptop),1,f2)){
+            fwrite(&laptop,sizeof(laptop),1,f3);
+        }
+
+        cout<<"file berhasil disambungkan ! ";
+        
+        fclose(f1); fclose(f2); fclose(f3);
+        break;
+    
+    default:
+        break;
+    }
+    main();
+}
+
+void lihat(char namaFile[]){
+    dataLaptop laptop;
+    arsipLaptop=fopen(namaFile,"r");
+    cout<<setfill('=')<<setw(75)<<"="<<endl;
+    cout<<"   ID LAPTOP     NAMA LAPTOP      HARGA           GARANSI        STOK"<<endl;
+    cout<<setfill('=')<<setw(75)<<"="<<endl;
+    while(fread(&laptop,sizeof(laptop),1,arsipLaptop)==1){
+        cout<<"   "<<laptop.id_laptop<<"               ";
+        cout<<laptop.nama_laptop<<"         ";
+        cout<<laptop.harga<<"            ";
+        cout<<laptop.garansi<<"         ";
+        cout<<laptop.stok<<"         "<<endl;
+    }
+    cout<<setfill('=')<<setw(75)<<"="<<endl;
+    fclose(arsipLaptop);
 }
 
