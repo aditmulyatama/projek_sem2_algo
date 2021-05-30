@@ -117,7 +117,7 @@ void output(){
 
 void cari(){
     system("cls");
-    cout<<"mantap";
+    cout<<"mntap";
 }
 
 void sorting(){
