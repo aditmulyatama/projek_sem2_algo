@@ -131,6 +131,7 @@ void transaksi(){
     char file1[50],file2[50],file3[50];
     dataLaptop laptop;
     int pilih;
+    int jmlData=0,batas,z=1;
     cout<<"1. Merging Sambung \n2.Splitting\nPilih : "; cin>>pilih;
 
     switch (pilih)
@@ -160,6 +161,39 @@ void transaksi(){
         fclose(f1); fclose(f2); fclose(f3);
         break;
     
+    case 2:
+        system("cls");
+        
+        cout<<"Masukkan nama file yang akan dibagi menjadi 2 file: ";cin>>file1;
+        lihat(file1);
+         cout<<"Masukkan nama file 1 : ";cin>>file2;
+         cout<<"\nMasukkan nama file 2 : ";cin>>file3;
+        if ((f1 = fopen(file1,"r"))==NULL || (f2 = fopen(file2,"w"))==NULL || (f3 = fopen(file3,"w"))==NULL)
+        { 
+            cout<<"File gagal dibuka!\n ";
+            exit(1);
+        }
+        while(fread(&laptop,sizeof(laptop),1,f1)){
+            jmlData++;
+        }
+        fclose(f1);
+        f1 = fopen(file1,"r");
+        batas=jmlData/2;
+        
+        while(fread(&laptop,sizeof(laptop),1,f1)){
+            if(z<batas) {
+                fwrite(&laptop,sizeof(laptop),1,f2);
+                z++;
+            }
+            else if (batas <= jmlData){ 
+                fwrite(&laptop,sizeof(laptop),1,f3);
+                batas++;
+            
+             }
+        }
+        fclose(f1); fclose(f2); fclose(f3);
+        system ("pause");
+        break;
     default:
         break;
     }
