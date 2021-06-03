@@ -7,7 +7,7 @@
 using namespace std;
 
 struct dataLaptop{
-    char id_laptop[10];
+    int id_laptop;
     char nama_laptop[90];
     long harga;
     int garansi, stok;
@@ -71,6 +71,9 @@ void input(){
     char namaFile[50];
     int banyakData;
     system("cls");
+    cout<<setfill('=')<<setw(25)<<"="<<endl;
+    cout<<"|      INPUT DATA       |"<<endl;
+    cout<<setfill('=')<<setw(25)<<"="<<endl;
     cout<<"masukkan nama file : "; cin>>namaFile;
     if((arsipLaptop=fopen(namaFile,"w"))==NULL){
         cout<<"file tidak dapat dibuat";
@@ -97,9 +100,12 @@ void output(){
     char namaFile[50];
     dataLaptop laptop;
     system("cls");
+    cout<<setfill('=')<<setw(25)<<"="<<endl;
+    cout<<"|      OUTPUT DATA      |"<<endl;
+    cout<<setfill('=')<<setw(25)<<"="<<endl;
     cout<<"Cari nama file : "; cin>>namaFile;
     arsipLaptop=fopen(namaFile,"r");
-    cout<<setfill('=')<<setw(75)<<"="<<endl;
+    cout<<endl<<endl<<endl<<setfill('=')<<setw(75)<<"="<<endl;
     cout<<"   ID LAPTOP     NAMA LAPTOP      HARGA           GARANSI        STOK"<<endl;
     cout<<setfill('=')<<setw(75)<<"="<<endl;
     while(fread(&laptop,sizeof(laptop),1,arsipLaptop)==1){
@@ -128,16 +134,22 @@ void sorting(){
 
 void transaksi(){
     system("cls");
+    cout<<setfill('=')<<setw(25)<<"="<<endl;
+    cout<<"|    TRANSAKSI DATA     |"<<endl;
+    cout<<setfill('=')<<setw(25)<<"="<<endl;
     char file1[50],file2[50],file3[50];
     dataLaptop laptop;
     int pilih;
     int jmlData=0,batas,z=1;
-    cout<<"1. Merging Sambung \n2.Splitting\nPilih : "; cin>>pilih;
+    cout<<"1. Merging Sambung \n2. Splitting\nPilih : "; cin>>pilih;
 
     switch (pilih)
     {
     case 1:
         system("cls");
+        cout<<setfill('=')<<setw(25)<<"="<<endl;
+        cout<<"|    Merging Sambung    |"<<endl;
+        cout<<setfill('=')<<setw(25)<<"="<<endl;
         cout<<"Masukkan nama file 1 : ";cin>>file1;
         lihat(file1);
         cout<<"\nMasukkan nama file 2 : ";cin>>file2;
@@ -163,7 +175,9 @@ void transaksi(){
     
     case 2:
         system("cls");
-        
+        cout<<setfill('=')<<setw(25)<<"="<<endl;
+        cout<<"|    Splitting File     |"<<endl;
+        cout<<setfill('=')<<setw(25)<<"="<<endl;
         cout<<"Masukkan nama file yang akan dibagi menjadi 2 file: ";cin>>file1;
         lihat(file1);
          cout<<"Masukkan nama file 1 : ";cin>>file2;
