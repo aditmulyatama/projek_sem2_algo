@@ -107,19 +107,24 @@ void output(){
     cout<<"|      OUTPUT DATA      |"<<endl;
     cout<<setfill('=')<<setw(25)<<"="<<endl;
     cout<<"Cari nama file : "; cin>>namaFile;
-    arsipLaptop=fopen(namaFile,"r");
-    cout<<endl<<endl<<endl<<setfill('=')<<setw(75)<<"="<<endl;
-    cout<<"   ID LAPTOP     NAMA LAPTOP      HARGA           GARANSI        STOK"<<endl;
-    cout<<setfill('=')<<setw(75)<<"="<<endl;
-    while(fread(&laptop[i],sizeof(laptop[i]),1,arsipLaptop)==1){
-        cout<<"   "<<laptop[i].id_laptop<<"               ";
-        cout<<laptop[i].nama_laptop<<"         ";
-        cout<<laptop[i].harga<<"               ";
-        cout<<laptop[i].garansi<<"         ";
-        cout<<laptop[i].stok<<"         "<<endl;
-        i++;
+    if((arsipLaptop=fopen(namaFile,"r"))==NULL){
+        cout<<"File tidak ditemukan :(\n\n";
+    } else {
+        cout<<endl<<endl<<endl<<setfill('=')<<setw(75)<<"="<<endl;
+        cout<<"   ID LAPTOP     NAMA LAPTOP      HARGA           GARANSI        STOK"<<endl;
+        cout<<setfill('=')<<setw(75)<<"="<<endl;
+        while(fread(&laptop[i],sizeof(laptop[i]),1,arsipLaptop)==1){
+            cout<<"   "<<laptop[i].id_laptop<<"               ";
+            cout<<laptop[i].nama_laptop<<"         ";
+            cout<<laptop[i].harga<<"               ";
+            cout<<laptop[i].garansi<<"         ";
+            cout<<laptop[i].stok<<"         "<<endl;
+            i++;
+        }
+        cout<<setfill('=')<<setw(75)<<"="<<endl;
     }
-    cout<<setfill('=')<<setw(75)<<"="<<endl;
+    
+    
     fclose(arsipLaptop);
     system("pause");
     main();
@@ -137,27 +142,32 @@ void cari(){
     cout<<"|      CARI DATA      |"<<endl;
     cout<<setfill('=')<<setw(25)<<"="<<endl;
     cout<<"Cari nama file : "; cin>>cari;
-    arsipLaptop=fopen(cari,"r");
-    cout<<"Cari data berdasarkan ID : "; cin>>id_cari;
-    while((fread(&laptop[i],sizeof(laptop[i]),1,arsipLaptop)==1)&&!found){
-        if(id_cari==laptop[i].id_laptop){
-            found=true;
-            cout<<"\nData ditemukan!";
-        } else i++;
-    }
-    if(found){
-        cout<<endl<<endl<<endl<<setfill('=')<<setw(75)<<"="<<endl;
-        cout<<"   ID LAPTOP     NAMA LAPTOP      HARGA           GARANSI        STOK"<<endl;
-        cout<<setfill('=')<<setw(75)<<"="<<endl;
-        cout<<"   "<<laptop[i].id_laptop<<"               ";
-        cout<<laptop[i].nama_laptop<<"         ";
-        cout<<laptop[i].harga<<"               ";
-        cout<<laptop[i].garansi<<"         ";
-        cout<<laptop[i].stok<<"         "<<endl;
-        cout<<setfill('=')<<setw(75)<<"="<<endl;
+
+    if((arsipLaptop=fopen(cari,"r"))==NULL){
+        cout<<"File tidak ditemukan :(\n\n";
     } else {
-        cout<<"Data tidak ditemukan :(\n\n";
+        cout<<"Cari data berdasarkan ID : "; cin>>id_cari;
+        while((fread(&laptop[i],sizeof(laptop[i]),1,arsipLaptop)==1)&&!found){
+            if(id_cari==laptop[i].id_laptop){
+                found=true;
+                cout<<"\nData ditemukan!";
+            } else i++;
+        }
+        if(found){
+            cout<<endl<<endl<<endl<<setfill('=')<<setw(75)<<"="<<endl;
+            cout<<"   ID LAPTOP     NAMA LAPTOP      HARGA           GARANSI        STOK"<<endl;
+            cout<<setfill('=')<<setw(75)<<"="<<endl;
+            cout<<"   "<<laptop[i].id_laptop<<"               ";
+            cout<<laptop[i].nama_laptop<<"         ";
+            cout<<laptop[i].harga<<"               ";
+            cout<<laptop[i].garansi<<"         ";
+            cout<<laptop[i].stok<<"         "<<endl;
+            cout<<setfill('=')<<setw(75)<<"="<<endl;
+        } else {
+            cout<<"Data tidak ditemukan :(\n\n";
+        }
     }
+    
     
     fclose(arsipLaptop);
     system("pause");
