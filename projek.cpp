@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <windows.h>
 #include <stdio.h>
+#define MAX 100
 using namespace std;
 
 struct dataLaptop{
@@ -67,7 +68,7 @@ int main()
 }
 
 void input(){
-    dataLaptop laptop;
+    dataLaptop laptop[MAX];
     char namaFile[50];
     int banyakData;
     system("cls");
@@ -82,13 +83,13 @@ void input(){
     
     cout<<endl<<"Banyak Data : "; cin>>banyakData;
     cout<<endl;
-    for (int i=1;i<=banyakData;i++){
-        cout<<"ID laptop\t: "; cin>>laptop.id_laptop; 
-        cout<<"Nama Laptop\t: "; cin>>laptop.nama_laptop;
-        cout<<"Harga \t\t: ";cin>>laptop.harga;
-        cout<<"Garansi \t: ";cin>>laptop.garansi;
-        cout<<"Stok \t\t: ";cin>>laptop.stok;
-        fwrite(&laptop,sizeof(laptop),1,arsipLaptop);
+    for (int i=0;i<banyakData;i++){
+        cout<<"ID laptop\t: "; cin>>laptop[i].id_laptop; 
+        cout<<"Nama Laptop\t: "; cin>>laptop[i].nama_laptop;
+        cout<<"Harga \t\t: ";cin>>laptop[i].harga;
+        cout<<"Garansi \t: ";cin>>laptop[i].garansi;
+        cout<<"Stok \t\t: ";cin>>laptop[i].stok;
+        fwrite(&laptop[i],sizeof(laptop[i]),1,arsipLaptop);
         cout<<endl<<endl;
     }
     fclose(arsipLaptop);
@@ -98,7 +99,9 @@ void input(){
 
 void output(){
     char namaFile[50];
-    dataLaptop laptop;
+    dataLaptop laptop[MAX];
+    int i=0;
+
     system("cls");
     cout<<setfill('=')<<setw(25)<<"="<<endl;
     cout<<"|      OUTPUT DATA      |"<<endl;
@@ -108,12 +111,13 @@ void output(){
     cout<<endl<<endl<<endl<<setfill('=')<<setw(75)<<"="<<endl;
     cout<<"   ID LAPTOP     NAMA LAPTOP      HARGA           GARANSI        STOK"<<endl;
     cout<<setfill('=')<<setw(75)<<"="<<endl;
-    while(fread(&laptop,sizeof(laptop),1,arsipLaptop)==1){
-        cout<<"   "<<laptop.id_laptop<<"               ";
-        cout<<laptop.nama_laptop<<"         ";
-        cout<<laptop.harga<<"               ";
-        cout<<laptop.garansi<<"         ";
-        cout<<laptop.stok<<"         "<<endl;
+    while(fread(&laptop[i],sizeof(laptop[i]),1,arsipLaptop)==1){
+        cout<<"   "<<laptop[i].id_laptop<<"               ";
+        cout<<laptop[i].nama_laptop<<"         ";
+        cout<<laptop[i].harga<<"               ";
+        cout<<laptop[i].garansi<<"         ";
+        cout<<laptop[i].stok<<"         "<<endl;
+        i++;
     }
     cout<<setfill('=')<<setw(75)<<"="<<endl;
     fclose(arsipLaptop);
@@ -122,9 +126,42 @@ void output(){
 }
 
 void cari(){
-  
+    bool found=false;
+    char cari[50];
+    int id_cari;
+    dataLaptop laptop[MAX];
+    int i=0;
+
     system("cls");
-    cout<<"mntap";
+    cout<<setfill('=')<<setw(25)<<"="<<endl;
+    cout<<"|      CARI DATA      |"<<endl;
+    cout<<setfill('=')<<setw(25)<<"="<<endl;
+    cout<<"Cari nama file : "; cin>>cari;
+    arsipLaptop=fopen(cari,"r");
+    cout<<"Cari data berdasarkan ID : "; cin>>id_cari;
+    while((fread(&laptop[i],sizeof(laptop[i]),1,arsipLaptop)==1)&&!found){
+        if(id_cari==laptop[i].id_laptop){
+            found=true;
+            cout<<"\nData ditemukan!";
+        } else i++;
+    }
+    if(found){
+        cout<<endl<<endl<<endl<<setfill('=')<<setw(75)<<"="<<endl;
+        cout<<"   ID LAPTOP     NAMA LAPTOP      HARGA           GARANSI        STOK"<<endl;
+        cout<<setfill('=')<<setw(75)<<"="<<endl;
+        cout<<"   "<<laptop[i].id_laptop<<"               ";
+        cout<<laptop[i].nama_laptop<<"         ";
+        cout<<laptop[i].harga<<"               ";
+        cout<<laptop[i].garansi<<"         ";
+        cout<<laptop[i].stok<<"         "<<endl;
+        cout<<setfill('=')<<setw(75)<<"="<<endl;
+    } else {
+        cout<<"Data tidak ditemukan :(\n\n";
+    }
+    
+    fclose(arsipLaptop);
+    system("pause");
+    main();
 }
 
 void sorting(){
@@ -133,14 +170,15 @@ void sorting(){
 }
 
 void transaksi(){
+    char file1[50],file2[50],file3[50];
+    dataLaptop laptop;
+    int pilih,i=0;
+    int jmlData=0,batas,z=1;
+
     system("cls");
     cout<<setfill('=')<<setw(25)<<"="<<endl;
     cout<<"|    TRANSAKSI DATA     |"<<endl;
     cout<<setfill('=')<<setw(25)<<"="<<endl;
-    char file1[50],file2[50],file3[50];
-    dataLaptop laptop;
-    int pilih;
-    int jmlData=0,batas,z=1;
     cout<<"1. Merging Sambung \n2. Splitting\nPilih : "; cin>>pilih;
 
     switch (pilih)
